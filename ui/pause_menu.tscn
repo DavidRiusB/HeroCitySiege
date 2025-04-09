@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://db2a8f6rrdfec"]
+
+[node name="PauseMenu" type="Node2D"]
