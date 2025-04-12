@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var movement_speed = 40.0
+@export var healt = 80
 @onready var animation_test = preload("res://scenes/animations/AnimatorTest.tscn")
 
 
@@ -54,3 +55,8 @@ func play_idle_animation():
 			animator.flip_h = state["flip_h"]
 			animator.play(state["idle"])
 			break
+
+
+func _on_hurt_box_hurt(damage: Variant):
+	healt -= damage
+	print(healt)
