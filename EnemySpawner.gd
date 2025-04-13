@@ -28,7 +28,7 @@ func get_random_position() -> Vector2:
 	var top_left = Vector2(player.global_position.x - viewport_size.x/2, player.global_position.y - viewport_size.y/2)
 	var top_right = Vector2(player.global_position.x + viewport_size.x/2, player.global_position.y - viewport_size.y/2)
 	var bottom_left = Vector2(player.global_position.x - viewport_size.x/2, player.global_position.y + viewport_size.y/2)
-	var bottom_right = Vector2(player.global_position.x + viewport_size.x/2, player.global_position.y - viewport_size.y/2)
+	var bottom_right = Vector2(player.global_position.x + viewport_size.x/2, player.global_position.y + viewport_size.y/2)
 	
 	var pos_side = ["up", "down", "right", "left"].pick_random()
 	
