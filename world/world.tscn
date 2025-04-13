@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c3laqnta1pgy5" path="res://assets/environments/Spring Tile.png" id="1_tcf2h"]
 [ext_resource type="PackedScene" uid="uid://u5d3ubsipudv" path="res://scenes/player/player.tscn" id="2_4717r"]
-[ext_resource type="PackedScene" uid="uid://bv6engsryuy83" path="res://scenes/enemies/enemy.tscn" id="3_4717r"]
+[ext_resource type="PackedScene" uid="uid://tvc1ralorpit" path="res://enemy_spawner.tscn" id="3_4717r"]
 
 [node name="World" type="Node2D"]
 
@@ -18,5 +18,4 @@ region_rect = Rect2(48.2378, 111.629, 48.1432, 49.0528)
 [node name="Player" parent="." instance=ExtResource("2_4717r")]
 movement_speed = 80.0
 
-[node name="Enemy" parent="." instance=ExtResource("3_4717r")]
-position = Vector2(42, -17)
+[node name="EnemySpawner" parent="." instance=ExtResource("3_4717r")]
