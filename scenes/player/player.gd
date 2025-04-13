@@ -76,7 +76,7 @@ func play_idle_animation():
 			break
 
 
-func _on_hurt_box_hurt(damage: Variant):
+func _on_hurt_box_hurt(damage: Variant, _angle, _knockback):
 	healt -= damage
 	print(healt)
 	
