@@ -11,7 +11,9 @@ func _physics_process(_delta):
 	move_and_slide()
 
 
-func _on_hurt_box_hurt(damage: Variant):
+func _on_hurt_box_hurt(damage: int):
 	hp -=damage
 	if hp <= 0:
 		queue_free()
+	else:
+		print("Enemy hit: ", hp)

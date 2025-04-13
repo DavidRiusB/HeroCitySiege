@@ -47,3 +47,5 @@ func _physics_process(delta):
 						emit_signal("hurt", area.get("damage"))
 						damage_timer = damage_interval
 						print("Ouch! (Cooldown)")
+						if area.has_method("_enemy_hit"):
+							area._enemy_hit(1)

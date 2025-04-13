@@ -2,7 +2,25 @@ extends CharacterBody2D
 
 @export var movement_speed = 40.0
 @export var healt = 80
+
 @onready var animation_test = preload("res://scenes/animations/AnimatorTest.tscn")
+
+# Attacks
+var ice_spear = preload("res://scenes/player/Attack/ice_spear.tscn")
+
+# Attack Nodes 
+@onready var ability_timer = get_node("%AbilityTimer")
+@onready var attack_timer = get_node("%AttackTimer")
+
+# Ice Spear Attributes
+var ice_spear_ammo = 0
+var ice_spear_base_ammo = 1
+var ice_spear_attack_speed = 1.5
+var ice_spear_level = 1
+
+#Enemy Related
+var enemy_close = []
+
 
 
 var animator: AnimatedSprite2D = null
@@ -20,6 +38,7 @@ var last_direction = Vector2.DOWN  # Default to facing down
 func _ready():
 	animator = animation_test.instantiate()
 	add_child(animator)
+	attack()
 
 func _physics_process(delta: float) -> void:
 	movement()
@@ -60,3 +79,45 @@ func play_idle_animation():
 func _on_hurt_box_hurt(damage: Variant):
 	healt -= damage
 	print(healt)
+	
+func attack():
+	if ice_spear_level > 0:
+		ability_timer.wait_time = ice_spear_attack_speed
+		if ability_timer.is_stopped():
+			ability_timer.start()
+
+
+func _on_ability_timer_timeout() -> void:
+	ice_spear_ammo += ice_spear_base_ammo
+	attack_timer.start()
+
+
+func _on_attack_timer_timeout() -> void:
+	if ice_spear_ammo > 0:
+		var ice_spear_attack = ice_spear.instantiate()
+		ice_spear_attack.position = position
+		ice_spear_attack.target = get_random_target()
+		ice_spear_attack.level = ice_spear_level
+		add_child(ice_spear_attack)
+		ice_spear_ammo -= 1
+		if ice_spear_ammo > 0:
+			attack_timer.start()
+		else:
+			attack_timer.stop()
+		
+		
+func get_random_target():
+	if enemy_close.size() > 0:
+		return enemy_close.pick_random().global_position
+	else:
+		return Vector2.UP
+
+
+func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
+	if not enemy_close.has(body):
+		enemy_close.append(body)
+
+
+func _on_enemy_detection_area_body_exited(body: Node2D) -> void:
+	if enemy_close.has(body):
+		enemy_close.erase(body)
