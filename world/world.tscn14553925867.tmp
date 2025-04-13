@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4jybn3m6j67o"]
+
+[ext_resource type="Texture2D" uid="uid://c3laqnta1pgy5" path="res://assets/environments/Spring Tile.png" id="1_tcf2h"]
+[ext_resource type="PackedScene" uid="uid://u5d3ubsipudv" path="res://scenes/player/player.tscn" id="2_4717r"]
+[ext_resource type="PackedScene" uid="uid://tvc1ralorpit" path="res://enemy_spawner.tscn" id="3_4717r"]
+
+[node name="World" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(973, 512)
+scale = Vector2(50, 50)
+texture = ExtResource("1_tcf2h")
+region_enabled = true
+region_rect = Rect2(48.2378, 111.629, 48.1432, 49.0528)
+
+[node name="Player" parent="." instance=ExtResource("2_4717r")]
+movement_speed = 80.0
+
+[node name="EnemySpawner" parent="." instance=ExtResource("3_4717r")]

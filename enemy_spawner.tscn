@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://tvc1ralorpit"]
 
-[ext_resource type="Script" uid="uid://csigv63wce664" path="res://EnemySpawner.gd" id="1_ewhtn"]
-[ext_resource type="Script" uid="uid://dcvp27udmhegd" path="res://Utility/SpawnInfo.gd" id="2_63vqd"]
+[ext_resource type="Script" uid="uid://csigv63wce664" path="res://enemy_spawner.gd" id="1_ewhtn"]
+[ext_resource type="Script" uid="uid://dcvp27udmhegd" path="res://Utility/spawn_info.gd" id="2_63vqd"]
 [ext_resource type="PackedScene" uid="uid://bv6engsryuy83" path="res://scenes/enemies/enemy.tscn" id="3_i0ei4"]
 
 [sub_resource type="Resource" id="Resource_568dl"]

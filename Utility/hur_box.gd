@@ -10,6 +10,8 @@ var hurt_box_type = 0
 
 signal hurt(damage, angle, knockback)
 
+var hit_once_arr = []
+
 var damage_timer = 0.0
 
 func _ready():
@@ -22,8 +24,14 @@ func _on_area_entered(area: Area2D):
 		match hurt_box_type:
 			1:  # Hit once
 				print("HurtBox type: Hit once")
-				_apply_knockback(area)
-				disable_timer.start()
+				if hit_once_arr.has(area) == false:
+					hit_once_arr.append(area)
+					if area.has_signal("remove_from_arr"):
+						if not area.is_connected("remove_from_arr", Callable(self, "remove_from_list")):
+							area.connect("remove_from_arr", Callable(self, "remove_from_list"))
+					_apply_knockback(area)
+				else:
+					return
 			2:  # Disable hit box
 				print("HurtBox type: Disable hit box")
 				if area.has_method("temp_disable"):
@@ -56,10 +64,15 @@ func _apply_knockback(area):
 	var angle = Vector2.ZERO
 	var knockback = 1
 
-	if area.angle != null:
+	if not area.get("angle") == null:
 		angle = area.angle
-
-	if area.knockback_amount != null:
+	
+	if not area.get("knockback_amount") == null:
 		knockback = area.knockback_amount
 
 	_emit_damage_signal(area, angle, knockback)
+	
+func remove_from_list(object):
+	if hit_once_arr.has(object):
+		hit_once_arr.erase(object)
+	
