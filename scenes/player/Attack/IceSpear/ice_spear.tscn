@@ -4,6 +4,7 @@
 
 [node name="IceSpear" type="Node2D"]
 script = ExtResource("1_jkvxq")
+level = 1
 
 [node name="AbilityTimer" type="Timer" parent="."]
 unique_name_in_owner = true

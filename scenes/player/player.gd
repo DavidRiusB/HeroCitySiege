@@ -3,16 +3,12 @@ extends CharacterBody2D
 # ==== Stats ====
 @export var movement_speed = 40.0
 @export var health = 80
+var experience = 0
+var character_level = 1
+var collected_experience = 0
 
 # ==== Scenes ====
 @onready var animator_scene = preload("res://scenes/animations/AnimatorTest.tscn")
-
-
-# ==== Timers ====
-@onready var timer_ability = get_node("%AbilityTimer")
-@onready var timer_attack = get_node("%AttackTimer")
-@onready var timer_tornado = get_node("%TornadoTimer")
-@onready var timer_tornado_attack = get_node("%TornadoAttackTimer")
 
 # ==== Enemy Tracking ====
 var enemies_in_range = []
@@ -20,6 +16,10 @@ var enemies_in_range = []
 # ==== Animation ====
 var animator: AnimatedSprite2D = null
 var last_direction = Vector2.DOWN  # optional: init with DOWN so idle anim is set
+
+# ==== GUI ====
+@onready var exp_bar = get_node("%ExperienceBar")
+@onready var lbl_level = get_node("%lbl_level")
 
 var animation_states = {
 	Vector2.RIGHT: {"walk": "Sideways", "idle": "idle_sideways", "flip_h": false},
@@ -31,6 +31,7 @@ var animation_states = {
 func _ready():
 	animator = animator_scene.instantiate()
 	add_child(animator)
+	set_xp_bar(experience, calculate_experience_cap())
 
 
 func _physics_process(delta: float) -> void:
@@ -83,3 +84,48 @@ func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 func _on_enemy_detection_area_body_exited(body: Node2D) -> void:
 	if enemies_in_range.has(body):
 		enemies_in_range.erase(body)
+
+
+func _on_grab_area_area_entered(area: Area2D) -> void:
+	if area.is_in_group("loot"):
+		area.target = self
+
+
+func _on_collect_area_area_entered(area: Area2D) -> void:
+	if area.is_in_group("loot"):
+		var gem_experience = area.collect()
+		calculate_experience(gem_experience)
+		
+func calculate_experience(gem_experience):
+	var experience_required = calculate_experience_cap()
+	collected_experience += gem_experience
+	if experience + collected_experience >= experience_required: #Lv up
+		collected_experience -= experience_required - experience
+		character_level += 1
+		lbl_level.text = str("Level:", character_level)
+		experience = 0
+		experience_required = calculate_experience_cap()
+		calculate_experience(0)
+	else:
+		experience += collected_experience
+		collected_experience = 0
+		
+	set_xp_bar(experience, experience_required)
+		
+	
+func calculate_experience_cap():
+	var exp_cap = character_level
+	
+	if character_level < 20:
+		exp_cap = character_level * 5
+	elif  character_level < 40:
+		exp_cap = character_level* (character_level - 19) * 8
+	else:
+		exp_cap = 255 + (character_level - 39) * 12
+		
+	return exp_cap
+
+	
+func set_xp_bar(set_value = 1, set_max_value = 100):
+	exp_bar.value = set_value
+	exp_bar.max_value = set_max_value
