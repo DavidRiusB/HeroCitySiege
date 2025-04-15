@@ -1,42 +1,26 @@
 extends CharacterBody2D
 
+# ==== Stats ====
 @export var movement_speed = 40.0
-@export var healt = 80
+@export var health = 80
 
-@onready var animation_test = preload("res://scenes/animations/AnimatorTest.tscn")
-
-# Attacks
-var ice_spear = preload("res://scenes/player/Attack/ice_spear.tscn")
-var tornado = preload("res://scenes/player/Attack/tornado.tscn")
-
-# Attack Nodes 
-@onready var ability_timer = get_node("%AbilityTimer")
-@onready var attack_timer = get_node("%AttackTimer")
-@onready var tornado_timer = get_node("%TornadoTimer")
-@onready var tornado_attack_timer = get_node("%TornadoAttackTimer")
+# ==== Scenes ====
+@onready var animator_scene = preload("res://scenes/animations/AnimatorTest.tscn")
 
 
-# Ice Spear Attributes
-var ice_spear_ammo = 0
-var ice_spear_base_ammo = 1
-var ice_spear_attack_speed = 1.5
-var ice_spear_level = 0
+# ==== Timers ====
+@onready var timer_ability = get_node("%AbilityTimer")
+@onready var timer_attack = get_node("%AttackTimer")
+@onready var timer_tornado = get_node("%TornadoTimer")
+@onready var timer_tornado_attack = get_node("%TornadoAttackTimer")
 
-# Tornado Attributes
+# ==== Enemy Tracking ====
+var enemies_in_range = []
 
-var tornado_ammo = 0
-var tornado_base_ammo = 5
-var tornado_attack_speed = 3
-var tornado_level = 1
-
-#Enemy Related
-var enemy_close = []
-
-
-
+# ==== Animation ====
 var animator: AnimatedSprite2D = null
+var last_direction = Vector2.DOWN  # optional: init with DOWN so idle anim is set
 
-# Mapping of movement directions to animations and idle states
 var animation_states = {
 	Vector2.RIGHT: {"walk": "Sideways", "idle": "idle_sideways", "flip_h": false},
 	Vector2.LEFT: {"walk": "Sideways", "idle": "idle_sideways", "flip_h": true},
@@ -44,16 +28,14 @@ var animation_states = {
 	Vector2.DOWN: {"walk": "Down", "idle": "idle_front", "flip_h": false}
 }
 
-var last_direction = Vector2.DOWN  # Default to facing down
-
 func _ready():
-	animator = animation_test.instantiate()
+	animator = animator_scene.instantiate()
 	add_child(animator)
-	attack()
+
 
 func _physics_process(delta: float) -> void:
 	movement()
-	print("Last direction:", last_direction)
+	
 
 func movement():
 	var input_vector = Vector2(
@@ -90,68 +72,14 @@ func play_idle_animation():
 
 
 func _on_hurt_box_hurt(damage: Variant, _angle, _knockback):
-	healt -= damage
-	print(healt)
+	health -= damage
+	print(health)
 	
-func attack():
-	if ice_spear_level > 0:
-		ability_timer.wait_time = ice_spear_attack_speed
-		if ability_timer.is_stopped():
-			ability_timer.start()
-	if tornado_level > 0:
-		tornado_timer.wait_time = tornado_attack_speed
-		if tornado_timer.is_stopped():
-			tornado_timer.start()
-
-
-func _on_ability_timer_timeout() -> void:
-	ice_spear_ammo += ice_spear_base_ammo
-	attack_timer.start()
-	
-func _on_tornado_timer_timeout() -> void:
-	tornado_ammo += tornado_base_ammo
-	tornado_attack_timer.start()
-
-
-func _on_attack_timer_timeout() -> void:
-	if ice_spear_ammo > 0:
-		var ice_spear_attack = ice_spear.instantiate()
-		ice_spear_attack.position = position
-		ice_spear_attack.target = get_random_target()
-		ice_spear_attack.level = ice_spear_level
-		add_child(ice_spear_attack)
-		ice_spear_ammo -= 1
-		if ice_spear_ammo > 0:
-			attack_timer.start()
-		else:
-			attack_timer.stop()
-			
-func _on_tornado_attack_timer_timeout() -> void:
-	if tornado_ammo > 0:
-		var tornado_attack = tornado.instantiate()
-		tornado_attack.position = position
-		tornado_attack.last_movement = last_direction
-		tornado_attack.level = tornado_level
-		add_child(tornado_attack)
-		tornado_ammo -= 1
-		if tornado_ammo > 0:
-			tornado_timer.start()
-		else:
-			tornado_attack_timer.stop()
-		
-		
-func get_random_target():
-	if enemy_close.size() > 0:
-		return enemy_close.pick_random().global_position
-	else:
-		return Vector2.UP
-
-
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
-	if not enemy_close.has(body):
-		enemy_close.append(body)
+	if not enemies_in_range.has(body):
+		enemies_in_range.append(body)
 
 
 func _on_enemy_detection_area_body_exited(body: Node2D) -> void:
-	if enemy_close.has(body):
-		enemy_close.erase(body)
+	if enemies_in_range.has(body):
+		enemies_in_range.erase(body)
