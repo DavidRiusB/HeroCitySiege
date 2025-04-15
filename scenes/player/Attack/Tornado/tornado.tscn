@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyo451m3p66s2"]
+
+[ext_resource type="Script" uid="uid://b14mlgkyqxmyi" path="res://scenes/player/Attack/Tornado/tornado.gd" id="1_y0c8k"]
+
+[node name="Tornado" type="Node2D"]
+script = ExtResource("1_y0c8k")
+
+[node name="AbilityTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="AttackTimer" type="Timer" parent="AbilityTimer"]
+unique_name_in_owner = true
+
+[connection signal="timeout" from="AbilityTimer" to="." method="_on_ability_timer_timeout"]
+[connection signal="timeout" from="AbilityTimer/AttackTimer" to="." method="_on_attack_timer_timeout"]

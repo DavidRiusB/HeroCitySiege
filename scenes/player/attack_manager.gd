@@ -5,6 +5,7 @@ var enemies_in_range = []
 
 var developmen_attacks = [	
 	preload("res://scenes/player/Attack/IceSpear/ice_spear.tscn"),
+	preload("res://scenes/player/Attack/Tornado/tornado.tscn")
 	]
 
 var hero_attacks  #hardcoded for now planing to pass is as argumumetns later 
