@@ -1,8 +1,5 @@
 extends Node2D
 
-var player 
-var enemies_in_range = []
-
 var developmen_attacks = [	
 	preload("res://scenes/player/Attack/IceSpear/ice_spear.tscn"),
 	preload("res://scenes/player/Attack/Tornado/tornado.tscn")

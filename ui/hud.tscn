@@ -1,3 +1,71 @@
-[gd_scene format=3 uid="uid://be0mh4lb0454p"]
+[gd_scene load_steps=6 format=3 uid="uid://be0mh4lb0454p"]
 
-[node name="Hud" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://2fbdht73snbv" path="res://assets/ui/exp_background.png" id="1_7ihmi"]
+[ext_resource type="Script" uid="uid://b88r0vpjt44b" path="res://ui/hud.gd" id="1_en2x2"]
+[ext_resource type="Texture2D" uid="uid://83chufnkwccv" path="res://assets/ui/exp_progress.png" id="2_en2x2"]
+[ext_resource type="FontFile" uid="uid://cqskf2m8dkugo" path="res://assets/fonts/tenderness.otf" id="3_1v5rv"]
+[ext_resource type="AudioStream" uid="uid://cou64l7ipuo0y" path="res://assets/audio/SoundEffect/levelup.ogg" id="4_q43x7"]
+
+[node name="Hud" type="Control" groups=["hub"]]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_en2x2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="ExperienceBar" type="TextureProgressBar" parent="CanvasLayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("1_7ihmi")
+texture_progress = ExtResource("2_en2x2")
+
+[node name="lbl_level" type="Label" parent="CanvasLayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 540.0
+offset_right = 640.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("3_1v5rv")
+theme_override_font_sizes/font_size = 16
+text = "Level: 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelUp" type="Panel" parent="CanvasLayer/GUI"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+layout_mode = 0
+offset_left = 800.0
+offset_top = 50.0
+offset_right = 1000.0
+offset_bottom = 300.0
+
+[node name="lblLvUp" type="Label" parent="CanvasLayer/GUI/LevelUp"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 50.0
+theme_override_fonts/font = ExtResource("3_1v5rv")
+text = "Level Up!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeOptions" type="VBoxContainer" parent="CanvasLayer/GUI/LevelUp"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 190.0
+offset_bottom = 100.0
+
+[node name="sndLvUp" type="AudioStreamPlayer2D" parent="CanvasLayer/GUI/LevelUp"]
+unique_name_in_owner = true
+stream = ExtResource("4_q43x7")
