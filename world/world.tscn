@@ -24,7 +24,17 @@ region_rect = Rect2(48.2378, 111.629, 48.1432, 49.0528)
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
 
 [node name="ExperianceGem" parent="Loot" instance=ExtResource("4_h5o24")]
+position = Vector2(79, 43)
+experience = 10
+
+[node name="ExperianceGem2" parent="Loot" instance=ExtResource("4_h5o24")]
 position = Vector2(222, 67)
 experience = 10
 
+[node name="ExperianceGem3" parent="Loot" instance=ExtResource("4_h5o24")]
+position = Vector2(187, 33)
+experience = 10
+
 [node name="Hud" parent="." instance=ExtResource("5_mmdvd")]
+offset_left = -16.0
+offset_right = -16.0
