@@ -255,4 +255,5 @@ animations = [{
 
 [node name="Javelin_animator" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_oric4")
-animation = &"Idle"
+animation = &"Attack"
+frame_progress = 0.952927

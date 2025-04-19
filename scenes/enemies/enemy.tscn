@@ -16,7 +16,7 @@ size = Vector2(25, 28)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jt03m"]
 size = Vector2(16, 26)
 
-[node name="Enemy" type="CharacterBody2D" groups=["attack"]]
+[node name="Enemy" type="CharacterBody2D" groups=["attack", "enemy"]]
 collision_layer = 4
 collision_mask = 4
 motion_mode = 1

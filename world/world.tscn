@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4jybn3m6j67o"]
+[gd_scene load_steps=7 format=3 uid="uid://b4jybn3m6j67o"]
 
 [ext_resource type="Texture2D" uid="uid://c3laqnta1pgy5" path="res://assets/environments/Spring Tile.png" id="1_tcf2h"]
 [ext_resource type="PackedScene" uid="uid://u5d3ubsipudv" path="res://scenes/player/player.tscn" id="2_4717r"]
 [ext_resource type="PackedScene" uid="uid://tvc1ralorpit" path="res://enemy_spawner.tscn" id="3_4717r"]
 [ext_resource type="PackedScene" uid="uid://dwxdfipf11kve" path="res://objects/experiance_gem.tscn" id="4_h5o24"]
 [ext_resource type="PackedScene" uid="uid://be0mh4lb0454p" path="res://ui/hud.tscn" id="5_mmdvd"]
+[ext_resource type="PackedScene" uid="uid://bpaithkkkj7ab" path="res://scenes/sidekick/sidekick_dev.tscn" id="6_fn3g3"]
 
 [node name="World" type="Node2D"]
 
@@ -38,3 +39,5 @@ experience = 10
 [node name="Hud" parent="." instance=ExtResource("5_mmdvd")]
 offset_left = -16.0
 offset_right = -16.0
+
+[node name="Sidekick_dev" parent="." instance=ExtResource("6_fn3g3")]

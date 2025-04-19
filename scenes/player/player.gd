@@ -71,10 +71,11 @@ func play_idle_animation():
 
 
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
-	if not enemies_in_range.has(body):
-		enemies_in_range.append(body)
+	if body.is_in_group("enemy") and not enemies_in_range.has(body):
+		enemies_in_range.append(body)	
 
 
 func _on_enemy_detection_area_body_exited(body: Node2D) -> void:
 	if enemies_in_range.has(body):
 		enemies_in_range.erase(body)
+		

@@ -3,7 +3,7 @@ extends Node2D
 var developmen_attacks = [	
 	preload("res://scenes/player/Attack/IceSpear/ice_spear.tscn"),
 	preload("res://scenes/player/Attack/Tornado/tornado.tscn"),
-	preload("res://scenes/player/Attack/Javelin/javelin.tscn")
+	#preload("res://scenes/player/Attack/Javelin/javelin.tscn")
 	]
 
 var hero_attacks  #hardcoded for now planing to pass is as argumumetns later 
