@@ -14,6 +14,11 @@ config/name="HeroCitySiege"
 run/main_scene="uid://b4jybn3m6j67o"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
+[autoload]
+
+GameManager="*res://managers/GameManager.gd"
+UpgradeManager="*res://managers/UpgradeManager.gd"
+
 [display]
 
 window/size/viewport_width=640
