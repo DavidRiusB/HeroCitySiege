@@ -37,7 +37,7 @@ func level_up():
 		
 	get_tree().paused = true
 	
-func upgrade_charatcer(upgrade):
+func upgrade_character(upgrade):
 	var options_children = upgrade_options.get_children()
 	for i in options_children:
 		i.queue_free()

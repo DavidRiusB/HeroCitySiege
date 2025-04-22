@@ -1,24 +1,19 @@
 [gd_scene load_steps=5 format=3 uid="uid://bpaithkkkj7ab"]
 
-[ext_resource type="Script" uid="uid://dwoxa3487lx10" path="res://sidekick_dev.gd" id="1_ldtdr"]
+[ext_resource type="Script" uid="uid://dwoxa3487lx10" path="res://scenes/sidekick/sidekick_dev.gd" id="1_ldtdr"]
 [ext_resource type="PackedScene" uid="uid://d38xy2hpbnwaw" path="res://scenes/animations/javelin_animator.tscn" id="2_25j82"]
 [ext_resource type="AudioStream" uid="uid://dito18ii4lfnm" path="res://assets/audio/SoundEffect/woosh.wav" id="3_25j82"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2iwma"]
+radius = 15.0
+height = 60.0
 
-[node name="Sidekick_dev" type="Area2D" groups=["sidekick"]]
-collision_layer = 16
-collision_mask = 4
+[node name="Sidekick_dev" type="Area2D" groups=["attack", "sidekick"]]
+collision_layer = 4
+collision_mask = 16
 script = ExtResource("1_ldtdr")
 
 [node name="Javelin_animator" parent="." instance=ExtResource("2_25j82")]
-
-[node name="Hitbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(1, 16)
-shape = SubResource("CapsuleShape2D_2iwma")
-disabled = true
 
 [node name="AbilityTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -31,6 +26,11 @@ unique_name_in_owner = true
 
 [node name="snd_attack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_25j82")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 16)
+shape = SubResource("CapsuleShape2D_2iwma")
+disabled = true
 
 [connection signal="timeout" from="AbilityTimer" to="." method="_on_ability_timer_timeout"]
 [connection signal="timeout" from="ChangeDirectionTimer" to="." method="_on_change_direction_timer_timeout"]
