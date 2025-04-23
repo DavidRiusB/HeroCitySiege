@@ -3,10 +3,6 @@ extends CharacterBody2D
 # ==== Stats ====
 var movement_speed: float
 
-
-# ==== Scenes ====
-@onready var animator_scene = preload("res://scenes/animations/AnimatorTest.tscn")
-
 # ==== Enemy Tracking ====
 var enemies_in_range = []
 
@@ -27,7 +23,7 @@ var animation_states = {
 func _ready():
 	var stats = self.get_node("%StatsManager")
 	movement_speed = stats.movement_speed
-	animator = animator_scene.instantiate()
+	animator = GameManager.hero_animation.instantiate()
 	add_child(animator)
 	
 

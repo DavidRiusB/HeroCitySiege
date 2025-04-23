@@ -118,7 +118,7 @@ func _on_change_direction_timer_timeout() -> void:
 func get_random_target():
 	var targets = player.enemies_in_range
 	if not targets.is_empty():
-		var target = targets.pick_random()
+		target = targets.pick_random()
 		if target:
 			return target
 	return null
