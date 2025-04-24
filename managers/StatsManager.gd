@@ -2,6 +2,7 @@ extends Node2D
 
 @export var movement_speed = 40.0
 @export var health = 100
+var max_health = 100
 var armor = 0
 var fire_rate = 0
 var projectile_size = 0
@@ -64,3 +65,25 @@ func calculate_experience_cap():
 		exp_cap = 255 + (character_level - 39) * 12
 		
 	return exp_cap
+	
+func update(stat: String, amount):
+	match stat:
+		"health":
+			health += amount
+			if health > max_health:
+				health = max_health
+				print("Healt:", health)
+		"armor":
+			armor += amount
+			print("Armor:", armor)
+		"movement_speed":
+			movement_speed += amount
+			print("Movement Speed:", movement_speed)
+		"projectile_size":
+			projectile_size += amount
+		"fire_rate":
+			fire_rate -= amount
+		"additional_attacks":
+			additional_attacks += amount
+		_:
+			print("StatsManager: Unknown stat '%s'" % stat)

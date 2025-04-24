@@ -5,7 +5,7 @@ var mouse_over = false
 # Default fallback item if nothing is passed
 const DEFAULT_UPGRADE = {
 	"icon": preload("res://assets/items/Upgrades/chunk.png"),
-	"display_name": "Small Food",
+	"display_name": "MedPAd",
 	"details": "Restores 20 health.",
 	"level": 1,
 	"prerequisite": [],
@@ -24,7 +24,6 @@ signal selected_upgrade(upgrade)
 
 func _ready() -> void:
 	connect("selected_upgrade", Callable(hub, "upgrade_character"))
-	print(upgrade, "On card")
 	update_card_info(upgrade)
 
 func _input(event):

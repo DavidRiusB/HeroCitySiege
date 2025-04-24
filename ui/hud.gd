@@ -41,7 +41,7 @@ func level_up():
 		if options < upgrades_size:
 			option_choice.upgrade = upgrades[options]
 			option_choice.update_card_info(upgrades[options])
-			print(upgrades[options], "on HUB")
+			
 		else:
 			pass
 						
@@ -50,6 +50,7 @@ func level_up():
 	get_tree().paused = true
 	
 func upgrade_character(upgrade):
+	UpgradeManager.apply_upgrade(upgrade)
 	var options_children = upgrade_options.get_children()
 	for i in options_children:
 		i.queue_free()
@@ -57,3 +58,4 @@ func upgrade_character(upgrade):
 		level_up_panel.position = Vector2(800, 50)
 		get_tree().paused = false
 		stats.calculate_experience(0)
+		

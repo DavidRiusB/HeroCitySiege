@@ -74,8 +74,18 @@ func get_random_upgrades(count: int = 3) -> Array:
 
 	return selected_upgrades
 
-func apply_upgrades(upgrade):
-	collected_upgrades.append(upgrade) 
+func apply_upgrade(upgrade: Dictionary) -> void:
+	if !collected_upgrades.has(upgrade):
+		collected_upgrades.append(upgrade)
+
+	if upgrade.type == "upgrade":
+		var target = upgrade.get("target", null)
+		var amount = upgrade.get("amount", 0)
+
+		if target != null:
+			# Make sure the stat exists and safely update it
+			StatsManager.update(target, amount)
+
 	
 	
 
