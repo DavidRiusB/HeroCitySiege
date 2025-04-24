@@ -5,16 +5,16 @@ var items = preload("res://data/items/items_upgrades.gd")
 var hero = null
 var upgrades = preload("res://data/general/general_upgrades.gd")
 
-var collected_upgrades = []
-var all_upgrades = {} # ← Unified dictionary
-var upgrades_pool = [] # ← Just the keys, for random selection
+var collected_upgrades = {}  # Dictionary to store collected upgrades
+var all_upgrades = {}  # Unified dictionary
+var upgrades_pool = []  # Just the keys, for random selection
 
 func _ready() -> void:
 	load_sidekicks()
 	merge_all_upgrades()
 	# Example preview
-	print(get_random_upgrades(3))
-
+	var selected_upgrades = get_random_upgrades(3)
+	print("Selected upgrades:", selected_upgrades)
 
 func load_sidekicks():
 	var dir = DirAccess.open("res://data/sidekicks/")
@@ -38,30 +38,27 @@ func merge_all_upgrades():
 	all_upgrades.merge(sidekick)
 	upgrades_pool = all_upgrades.keys()
 
-
 func get_random_upgrades(count: int = 3) -> Array:
 	var valid_keys = []
 
 	for key in upgrades_pool:
 		# Skip if already collected
-		if collected_upgrades.has(key):
+		if key in collected_upgrades:
 			continue
 
 		var upgrade = all_upgrades.get(key, null)
 		if upgrade == null:
 			continue
-		
 
 		# Check for prerequisites
 		if "prerequisite" in upgrade and upgrade["prerequisite"].size() > 0:
 			var all_met = true
 			for prereq in upgrade["prerequisite"]:
-				if !collected_upgrades.has(prereq):
+				if prereq not in collected_upgrades:
 					all_met = false
 					break
 			if !all_met:
 				continue
-		
 
 		# Passed all checks, add to valid keys
 		valid_keys.append(key)
@@ -70,13 +67,24 @@ func get_random_upgrades(count: int = 3) -> Array:
 
 	var selected_upgrades = []
 	for i in range(min(count, valid_keys.size())):
-		selected_upgrades.append(all_upgrades[valid_keys[i]])
+		var key = valid_keys[i]
+		var upgrade = all_upgrades[key]
+		selected_upgrades.append({
+			"key": key,
+			"upgrade": upgrade
+		})
 
+	print("Selected upgrade keys and upgrades:", selected_upgrades)
 	return selected_upgrades
 
-func apply_upgrade(upgrade: Dictionary) -> void:
-	if !collected_upgrades.has(upgrade):
-		collected_upgrades.append(upgrade)
+func apply_upgrade(upgrade_key: String) -> void:
+	var upgrade = all_upgrades.get(upgrade_key, null)
+	if upgrade == null:
+		print("Invalid upgrade key:", upgrade_key)
+		return
+
+	if upgrade_key not in collected_upgrades:
+		collected_upgrades[upgrade_key] = upgrade
 
 	if upgrade.type == "upgrade":
 		var target = upgrade.get("target", null)
@@ -85,8 +93,7 @@ func apply_upgrade(upgrade: Dictionary) -> void:
 		if target != null:
 			# Make sure the stat exists and safely update it
 			StatsManager.update(target, amount)
+	elif upgrade.type == "sidekick":
+		SidekickManager.sidekick_upgrade(upgrade)
 
-	
-	
-
-	
+	print("Collected upgrades:", collected_upgrades)

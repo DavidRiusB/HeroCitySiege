@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 GameManager="*res://managers/GameManager.gd"
 UpgradeManager="*res://managers/UpgradeManager.gd"
 StatsManager="*res://managers/StatsManager.gd"
+SidekickManager="*res://managers/SidekickManager.gd"
 
 [display]
 

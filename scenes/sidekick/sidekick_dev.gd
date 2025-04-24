@@ -18,9 +18,9 @@ signal remove_from_arr(object)
 
 # ==== Base Combat Stats ====
 var fire_rate = 4.0
-var damage = 10
+var damage = 0
 var knockback_amount = 100
-var paths = 3 # Number of simultaneous targets to attack
+var paths = 0 # Number of simultaneous targets to attack
 var attack_size = 1.0
 var attack_speed = 200.0
 
@@ -36,10 +36,11 @@ func  _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 	ability_timer.wait_time = fire_rate
 	animator.play("Idle")
+	set_stats()
 	
 		
 func update_javelin():
-	damage = 10
+	damage
 
 func _process(delta: float) -> void:
 	if not player:
@@ -130,4 +131,22 @@ func enable_attack(active: bool = true):
 	else:		
 		collision.call_deferred("set", "disabled", true)
 		animator.play("Run")
+		
+func set_stats() -> void:
+	match level:
+		1:
+			damage = 5
+			paths = 1
+		2:
+			damage = 10
+			paths = 2
+		3:
+			damage = 15
+			paths = 3
+		_:
+			damage = 5
+			paths = 1
+
+			
+			
 		

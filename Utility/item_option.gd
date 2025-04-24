@@ -4,6 +4,7 @@ var mouse_over = false
 
 # Default fallback item if nothing is passed
 const DEFAULT_UPGRADE = {
+	"upgrade" :	{
 	"icon": preload("res://assets/items/Upgrades/chunk.png"),
 	"display_name": "MedPAd",
 	"details": "Restores 20 health.",
@@ -11,8 +12,10 @@ const DEFAULT_UPGRADE = {
 	"prerequisite": [],
 	"type": "item"
 }
+	}
 
-var upgrade: Dictionary = {}  # Always treat it as a Dictionary
+
+var upgrade = {}  # Always treat it as a Dictionary
 
 @onready var hub = get_tree().get_first_node_in_group("hub")
 @onready var icon = $ColorRect/Icon
@@ -25,6 +28,7 @@ signal selected_upgrade(upgrade)
 func _ready() -> void:
 	connect("selected_upgrade", Callable(hub, "upgrade_character"))
 	update_card_info(upgrade)
+	print("in card", upgrade)
 
 func _input(event):
 	if event.is_action_pressed("click") and mouse_over:
@@ -37,11 +41,14 @@ func _on_mouse_exited() -> void:
 	mouse_over = false
 
 func update_card_info(upgrade_data: Dictionary) -> void:
-	upgrade = DEFAULT_UPGRADE if upgrade_data.is_empty() else upgrade_data
+	if upgrade_data.is_empty():
+		upgrade_data = DEFAULT_UPGRADE
+	
+
 
 
 	# Update visuals
-	icon.texture = load(upgrade["icon"]) if typeof(upgrade["icon"]) == TYPE_STRING else upgrade["icon"]
-	lbl_name.text = upgrade["display_name"]
-	lbl_description.text = upgrade["details"]
-	lbl_level.text = "Level %d" % upgrade["level"]
+	icon.texture = load(upgrade_data["upgrade"]["icon"]) if typeof(upgrade_data["upgrade"]["icon"]) == TYPE_STRING else upgrade_data["upgrade"]["icon"]
+	lbl_name.text = upgrade_data["upgrade"]["display_name"]
+	lbl_description.text = upgrade_data["upgrade"]["details"]
+	lbl_level.text = "Level %d" % upgrade_data["upgrade"]["level"]
