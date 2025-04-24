@@ -34,7 +34,7 @@ func load_sidekicks():
 func merge_all_upgrades():
 	all_upgrades = {}
 	all_upgrades.merge(items.ITEM_UPGRADES)
-	#all_upgrades.merge(upgrades.GENERAL_UPGRADES)
+	all_upgrades.merge(upgrades.GENERAL_UPGRADES)
 	all_upgrades.merge(sidekick)
 	upgrades_pool = all_upgrades.keys()
 
@@ -50,6 +50,7 @@ func get_random_upgrades(count: int = 3) -> Array:
 		var upgrade = all_upgrades.get(key, null)
 		if upgrade == null:
 			continue
+		
 
 		# Check for prerequisites
 		if "prerequisite" in upgrade and upgrade["prerequisite"].size() > 0:
@@ -60,6 +61,7 @@ func get_random_upgrades(count: int = 3) -> Array:
 					break
 			if !all_met:
 				continue
+		
 
 		# Passed all checks, add to valid keys
 		valid_keys.append(key)
@@ -72,6 +74,9 @@ func get_random_upgrades(count: int = 3) -> Array:
 
 	return selected_upgrades
 
+func apply_upgrades(upgrade):
+	collected_upgrades.append(upgrade) 
+	
 	
 
 	

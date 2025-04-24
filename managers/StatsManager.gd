@@ -2,9 +2,15 @@ extends Node2D
 
 @export var movement_speed = 40.0
 @export var health = 100
+var armor = 0
+var fire_rate = 0
+var projectile_size = 0
+var additional_attacks = 0
+
 var experience = 0
 var character_level = 1
 var collected_experience = 0
+
 
 @onready var hub = preload("res://ui/hud.tscn")
 

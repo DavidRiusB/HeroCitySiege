@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dmnivsuhihk07" path="res://scenes/player/player.gd" id="1_dovo2"]
 [ext_resource type="PackedScene" uid="uid://dvveaaryormi0" path="res://Utility/hurt_box.tscn" id="2_dovo2"]
 [ext_resource type="Script" uid="uid://c36l8ka62p5mo" path="res://scenes/player/attack_manager.gd" id="3_gmlin"]
-[ext_resource type="Script" uid="uid://cucnb8xya842u" path="res://scenes/player/stats_manager.gd" id="7_qek5x"]
+[ext_resource type="Script" uid="uid://cucnb8xya842u" path="res://managers/StatsManager.gd" id="7_qek5x"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dovo2"]
 radius = 3.0
