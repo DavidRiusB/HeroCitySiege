@@ -2,7 +2,7 @@ extends Node
 
 const ICON = "res://assets/items/Weapons/javelin_3_new_attack.png"
 
-const SIDEKICK_DEV_UPGRADES = {
+const SIDEKICK_UPGRADES = {
 	"sidekick_dev1": {
 		"icon": ICON,
 		"display_name": "Sidekick Strike I",

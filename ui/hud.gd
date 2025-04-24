@@ -28,13 +28,25 @@ func level_up():
 	tween.tween_property(level_up_panel, "position", Vector2(220, 50), 0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
 	tween.play()
 	level_up_panel.visible = true	
+	
 	var options = 0
 	var options_max = 3
+	var upgrades = UpgradeManager.get_random_upgrades(options_max)
+	var upgrades_size = upgrades.size()
+	
 	while options < options_max:
 		var option_choice = item_option.instantiate()
 		upgrade_options.add_child(option_choice)
-		options += 1
 		
+		if options < upgrades_size:
+			option_choice.upgrade = upgrades[options]
+			option_choice.update_card_info(upgrades[options])
+			print(upgrades[options], "on HUB")
+		else:
+			pass
+						
+		options += 1
+
 	get_tree().paused = true
 	
 func upgrade_character(upgrade):
