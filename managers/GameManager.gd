@@ -1,3 +1,6 @@
 extends Node
 
-@onready var hero_animation = preload("res://scenes/animations/AnimatorTest.tscn")
+
+
+
+@onready var selected_hero = load("res://data/heroes/hero_dev.gd") #Hardcoded until we add hero selection

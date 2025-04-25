@@ -4,6 +4,7 @@ var mouse_over = false
 
 # Default fallback item if nothing is passed
 const DEFAULT_UPGRADE = {
+	"key": "med_pad",
 	"upgrade" :	{
 	"icon": preload("res://assets/items/Upgrades/chunk.png"),
 	"display_name": "MedPAd",
@@ -29,6 +30,8 @@ func _ready() -> void:
 	connect("selected_upgrade", Callable(hub, "upgrade_character"))
 	update_card_info(upgrade)
 	print("in card", upgrade)
+	if upgrade.is_empty():
+		upgrade = DEFAULT_UPGRADE
 
 func _input(event):
 	if event.is_action_pressed("click") and mouse_over:
@@ -43,9 +46,6 @@ func _on_mouse_exited() -> void:
 func update_card_info(upgrade_data: Dictionary) -> void:
 	if upgrade_data.is_empty():
 		upgrade_data = DEFAULT_UPGRADE
-	
-
-
 
 	# Update visuals
 	icon.texture = load(upgrade_data["upgrade"]["icon"]) if typeof(upgrade_data["upgrade"]["icon"]) == TYPE_STRING else upgrade_data["upgrade"]["icon"]

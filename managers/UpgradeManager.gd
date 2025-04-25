@@ -33,8 +33,8 @@ func load_sidekicks():
 
 func merge_all_upgrades():
 	all_upgrades = {}
-	all_upgrades.merge(items.ITEM_UPGRADES)
-	all_upgrades.merge(upgrades.GENERAL_UPGRADES)
+	#all_upgrades.merge(items.ITEM_UPGRADES)
+	#all_upgrades.merge(upgrades.GENERAL_UPGRADES)
 	all_upgrades.merge(sidekick)
 	upgrades_pool = all_upgrades.keys()
 

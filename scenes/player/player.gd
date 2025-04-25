@@ -10,6 +10,8 @@ var enemies_in_range = []
 var animator: AnimatedSprite2D = null
 var last_direction = Vector2.DOWN  # optional: init with DOWN so idle anim is set
 
+var hero_attacks = null
+
 
 
 
@@ -23,8 +25,16 @@ var animation_states = {
 func _ready():
 	var stats = self.get_node("%StatsManager")
 	movement_speed = stats.movement_speed
-	animator = GameManager.hero_animation.instantiate()
+	
+	var hero_data = GameManager.selected_hero.HERO  # Access the HERO constant
+	var animator_scene = load(hero_data.animator_path)  # Load scene from string path
+	animator = animator_scene.instantiate()	
 	add_child(animator)
+	print("Animator path:", hero_data.animator_path)
+	print("Loaded animator scene:", animator_scene)
+	
+	
+
 	
 
 
@@ -50,6 +60,10 @@ func movement():
 	move_and_slide()
 
 func update_animation(direction: Vector2):
+	if animator == null:
+		print("NO ANIMATOR ON UPDATE ANIMATOR")
+		return  # or print a warning
+
 	for dir in animation_states.keys():
 		if direction.dot(dir) > 0.5:
 			var state = animation_states[dir]
@@ -58,12 +72,17 @@ func update_animation(direction: Vector2):
 			break
 
 func play_idle_animation():
+	if animator == null:
+		print("NO ANIMATOR ON play idle animation")
+		return  # or print a warning
+		
 	for dir in animation_states.keys():
 		if last_direction.dot(dir) > 0.5:
 			var state = animation_states[dir]
 			animator.flip_h = state["flip_h"]
 			animator.play(state["idle"])
 			break
+
 
 
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
