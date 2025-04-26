@@ -2,7 +2,7 @@ extends Node
 
 var sidekick = {}
 var items = preload("res://data/items/items_upgrades.gd")
-var hero = null
+var attack_upgrades = {}
 var upgrades = preload("res://data/general/general_upgrades.gd")
 
 var collected_upgrades = {}  # Dictionary to store collected upgrades
@@ -11,10 +11,18 @@ var upgrades_pool = []  # Just the keys, for random selection
 
 func _ready() -> void:
 	load_sidekicks()
+	load_hero_attack_upgrades()
 	merge_all_upgrades()
-	# Example preview
-	var selected_upgrades = get_random_upgrades(3)
-	print("Selected upgrades:", selected_upgrades)
+	
+
+func load_hero_attack_upgrades():
+	var hero_data = GameManager.selected_hero.HERO
+	var attack_upgrades_script = load(hero_data.attack_upgrades_path)
+	if "ATTACK_UPGRADES" in attack_upgrades:
+		attack_upgrades = attack_upgrades_script.ATTACK_UPGRADES
+	else:
+		print("Missing ATTACK_UPGRADES in ", attack_upgrades_script)
+	
 
 func load_sidekicks():
 	var dir = DirAccess.open("res://data/sidekicks/")
@@ -33,8 +41,9 @@ func load_sidekicks():
 
 func merge_all_upgrades():
 	all_upgrades = {}
-	#all_upgrades.merge(items.ITEM_UPGRADES)
-	#all_upgrades.merge(upgrades.GENERAL_UPGRADES)
+	all_upgrades.merge(attack_upgrades)
+	all_upgrades.merge(items.ITEM_UPGRADES)
+	all_upgrades.merge(upgrades.GENERAL_UPGRADES)
 	all_upgrades.merge(sidekick)
 	upgrades_pool = all_upgrades.keys()
 

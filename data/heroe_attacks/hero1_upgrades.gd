@@ -1,11 +1,11 @@
 const ICON = "res://assets/items/Weapons/ice_spear.png"
 
-const HERO1_UPGRADES = {
+const ATTACK_UPGRADES = {
 	"ice_lance_1": {
 		"icon": ICON,
 		"display_name": "Ice Lance I",
-		"details": "Shoots an ice lance at a random enemy.",
-		"level": 1,
+		"details": "Shoots an additional ice lance at a random enemy.",
+		"level": 2,
 		"prerequisite": [],
 		"type": "hero"
 	},
@@ -13,7 +13,7 @@ const HERO1_UPGRADES = {
 		"icon": ICON,
 		"display_name": "Ice Lance II",
 		"details": "Shoots an additional ice lance at a random enemy.",
-		"level": 2,
+		"level": 3,
 		"prerequisite": ["ice_lance_1"],
 		"type": "hero"
 	}
