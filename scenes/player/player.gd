@@ -31,11 +31,7 @@ func _ready():
 	animator = animator_scene.instantiate()	
 	add_child(animator)
 	print("Animator path:", hero_data.animator_path)
-	print("Loaded animator scene:", animator_scene)
-	
-	
-
-	
+	print("Loaded animator scene:", animator_scene)	
 
 
 func _physics_process(delta: float) -> void:
